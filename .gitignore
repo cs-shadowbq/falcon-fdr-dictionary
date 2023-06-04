@@ -1,0 +1,14 @@
+.pytest_cache
+__pycache__
+.cache
+.tox
+.idea
+.vscode
+.DS_Store
+.env
+docs/*.json
+docs/*.csv
+docs/*.xlsx
+docs/*.xls
+docs/*.html
+docs/*.md
