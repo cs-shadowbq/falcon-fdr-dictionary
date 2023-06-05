@@ -105,31 +105,104 @@ Length of current set: 109
 .............................................................................................................-
 ```
 
-## Tagging the DataSets created by Falcon FDR Schemas Dictionary
+### Example of the dictionary entry
 
-You can tag the DataSets created by Falcon FDR Schemas Dictionary with the following command:
-
-
-```shell
-python ./bin/tag-dictionary.py docs/fdr-event-dictionary-filtered.json docs/fdr-event-dictionary-tagged.json
+```json
+    {
+        "base_id": "184",
+        "description": "Sent by LFODownloadActor when a new configuration manifest has been downloaded.",
+        "fields": [
+            {
+                "id": "15",
+                "name": "TargetFileName",
+                "optional": false,
+                "version-added": 0
+            },
+            {
+                "id": "4",
+                "name": "Status",
+                "optional": false,
+                "version-added": 0
+            },
+            {
+                "id": "63",
+                "name": "ErrorText",
+                "optional": false,
+                "version-added": 0
+            },
+            {
+                "id": "66",
+                "name": "CloudErrorCode",
+                "optional": false,
+                "version-added": 0
+            },
+            {
+                "id": "46",
+                "name": "SHA256HashData",
+                "optional": false,
+                "version-added": 0
+            },
+            {
+                "id": "47",
+                "name": "Id",
+                "optional": false,
+                "version-added": 1
+            }
+        ],
+        "id": "268435640",
+        "name": "ManifestDownloadComplete",
+        "platform": "mac",
+        "version": 1
+    },
 ```
 
-This script takes a JSON file as input and outputs a JSON file with the tag and name_expanded fields added to each collection. The function uses a dictionary of keywords and their corresponding tags to find likely tags. The script also prints to STDOUT the collections for which no tag was found
+## Expanding the Name and Tagging the DataSets created by Falcon FDR Schemas Dictionary
 
-An example of the tag cloud keword dictionary:
+### Why expand the name?
+
+CrowdStrike name of events in the dictionary use no spaces. Using these scripts, you can expand the name field of the dictionary into `name_expanded`. The `name_expanded` field injects spaces so the field becomes human readable.
+
+### Why add additional tags?
+
+CrowdStrike only provides the platform for each event in the dictionary. Using these scripts, you can add `tags` to the DataSets created by Falcon FDR Schemas Dictionary. Tags are important for third-party tools that use the DataSets in production. They can be used to filter the DataSets by platform, type, or other criteria. The `tags` are based on keywords found in the `description` and `name_expanded` fields of the dictionary.
+
+### Running the script
+
+You can tag the DataSets created by Falcon FDR Schemas Dictionary with the following command `python ./bin/tag-dictionary.py <input_file> <output_file>`
+
+This script takes a JSON file as input and outputs a JSON file with the `tags` and `name_expanded` fields added to each collection. The function uses a dictionary of keywords and their corresponding tags to find likely tags. The script also prints to STDOUT the collections for which no tag was found.
+
+An snippet example of the tag cloud keyword dictionary:
 
 ```python
 keywords = {
         'file': ['file', 'files', 'disk', 'rename', 'volume', 'io', 'directory', 'image', 'symbolic link'],
         'pe': ['pe', 'pe32', 'pe64', 'portable executable', 'executable'],
+        (...)
 }
 ```
 
-### Example
+### Example of the modified dictionary entry
+
+```json
+{
+    "description": "Sys Config Info",
+    "id": 805308726,
+    "name": "SysConfigInfo",
+    "name_expanded": "Sys Config Info",
+    "platform": "linux",
+    "tags": [
+        "unix",
+        "info",
+        "audit"
+    ]
+    // ( .version,.base_id,.fields )
+}
+```
 
 ```shell
-python tag-dictionary.py docs/fdr-event-dictionary-filtered.json docs/fdr-event-dictionary-tagged.json
-No tag found for: (999999) New Unknown Keyword Found
+python ./bin/tag-dictionary.py docs/fdr-event-dictionary.json docs/fdr-event-dictionary-tagged.json
+No tags found for: (999999) New Unknown Keyword Found
 ```
 
 ## Filtering or Converting the JSON Dictionary
@@ -156,7 +229,7 @@ You can also use `jq` and `jtbl` to better view the data in the terminal:
 cat fdr-event-dictionary.json | jq 'map(del(.version,.base_id,.fields))' | jtbl
 
 ╒══════════════════════════════╤════════════╤══════════════════════════════╤══════════════════════════════╤══════════════╤══════════════════════════════╕
-│ description                  │         id │ name                         │ name_expanded                │ platform     │ tag                          │
+│ description                  │         id │ name                         │ name_expanded                │ platform     │ tags                         │
 ╞══════════════════════════════╪════════════╪══════════════════════════════╪══════════════════════════════╪══════════════╪══════════════════════════════╡
 │                              │  805308726 │ SysConfigInfo                │ Sys Config Info              │ linux        │ ['unix', 'info', 'audit']    │
 ├──────────────────────────────┼────────────┼──────────────────────────────┼──────────────────────────────┼──────────────┼──────────────────────────────┤

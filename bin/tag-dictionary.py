@@ -121,10 +121,10 @@ for item in data:
     # Extract the tag from the description and name_expanded
     tag_d = extract_tag(item['description'])
     tag_n = extract_tag(item['name_expanded'])
-    item['tag'] = list(set(tag_d + tag_n))
+    item['tags'] = list(set(tag_d + tag_n))
 
-    if item['tag'] == []:
-        print(f"No tag found for: ({item['id']}) {item['name_expanded']}")
+    if item['tags'] == []:
+        print(f"No tags found for: ({item['id']}) {item['name_expanded']}")
 
 
 # Print the dictionary to a json file
