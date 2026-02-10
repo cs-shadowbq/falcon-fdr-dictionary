@@ -12,7 +12,7 @@ A comprehensive Python CLI tool for fetching, tagging, and managing CrowdStrike 
 | _)  | ) ( )  ' / )____( | _)   )\_/( | _)  |  \ |   | |  )____( | ) (  _| |_ ))_    | |   _| |_ ))__(( |  \ |  /( )\ )  ' / '.  /  
 )_(   /___/ |_()_\        )___(   \_/  )___( )_()_(   )_(         /___/ )_____(\__(   )_(  )_____(\____/ )_()_( )_/ \_(|_()_\  /_(
 
-Falcon FDR Event Dictionary v1.0.0
+Falcon FDR Event Dictionary v2.0.0
 
 ╭───────────────╮
 │ Generate Mode │
@@ -137,7 +137,7 @@ falcon-fdr-events-dictionary generate \
 | _)  | ) ( )  ' / )____( | _)   )\_/( | _)  |  \ |   | |  )____( | ) (  _| |_ ))_    | |   _| |_ ))__(( |  \ |  /( )\ )  ' / '.  /  
 )_(   /___/ |_()_\        )___(   \_/  )___( )_()_(   )_(         /___/ )_____(\__(   )_(  )_____(\____/ )_()_( )_/ \_(|_()_\  /_(
 
-Falcon FDR Event Dictionary v1.0.0
+Falcon FDR Event Dictionary v2.0.0
 
 ╭───────────────╮
 │ Generate Mode │

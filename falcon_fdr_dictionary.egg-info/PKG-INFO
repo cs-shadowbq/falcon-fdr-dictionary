@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: falcon-fdr-dictionary
-Version: 1.0.0
+Version: 2.0.0
 Summary: CrowdStrike Falcon FDR Event Dictionary - Schema retrieval and tagging tool
 Author: CrowdStrike
 Maintainer-email: Scott MacGregor <scott.macgregor@crowdstrike.com>

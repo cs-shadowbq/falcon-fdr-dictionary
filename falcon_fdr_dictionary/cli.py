@@ -18,7 +18,7 @@ from falcon_fdr_dictionary.config import Config, get_config
 from falcon_fdr_dictionary.api_client import FDRClient
 from falcon_fdr_dictionary.tagging import tag_dictionary
 
-VERSION = "1.0.0"
+VERSION = "2.0.0"
 console = Console()
 
 BANNER = r"""
