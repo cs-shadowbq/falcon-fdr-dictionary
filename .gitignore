@@ -13,3 +13,4 @@ docs/*.xls
 docs/*.html
 docs/*.md
 *.log
+*.egg-info
