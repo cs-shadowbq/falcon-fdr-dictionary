@@ -1,0 +1,2 @@
+[console_scripts]
+falcon-fdr-events-dictionary = falcon_fdr_dictionary.cli:main

@@ -1,245 +1,424 @@
 # Falcon FDR Event Dictionary
 
-This tool will pull the Falcon FDR event dictionary and save it to a file in the current directory. The file will be named `falcon-fdr-event-dictionary.json`.
+A comprehensive Python CLI tool for fetching, tagging, and managing CrowdStrike Falcon FDR (Flight Data Recorder) event schemas. Built with modern Python packaging, Rich terminal UI, and YAML-based configuration.
+
+## Core Features
+
+**Generate Event Dictionary** - Fetch all FDR event schemas from CrowdStrike API with progress tracking  
+
+```txt
+ ___   ___   ____          ___   _   _  ___   _  _   _____         ___    ___   ___  _____   ___   ____   _  _     _    ____   _  _  
+) __( \   \ /  _ \  ____  ) __( \ ( ) /) __( ) \/ ( )__ __( ____  \   \  )_ _( / _( )__ __( )_ _( / __ \ ) \/ (   )_\  /  _ \ ) () ( 
+| _)  | ) ( )  ' / )____( | _)   )\_/( | _)  |  \ |   | |  )____( | ) (  _| |_ ))_    | |   _| |_ ))__(( |  \ |  /( )\ )  ' / '.  /  
+)_(   /___/ |_()_\        )___(   \_/  )___( )_()_(   )_(         /___/ )_____(\__(   )_(  )_____(\____/ )_()_( )_/ \_(|_()_\  /_(
+
+Falcon FDR Event Dictionary v1.0.0
+
+╭───────────────╮
+│ Generate Mode │
+╰───────────────╯
+Output file: docs/fdr-event-dictionary.json
+Cloud region: auto
+
+✓ Authentication successful
+
+Fetching 2,847 events...
+
+⠋ Fetching event details... ████████████████████░░░░░░░░  75% (2135/2847) 0:01:23
+
+✓ Successfully generated dictionary
+Saved 2847 events to: docs/fdr-event-dictionary.json
+```
+
+### Additonal Features
+
+**Smart Tagging** - Automatically tag events with keywords from customizable YAML files  
+**Credential Validation** - Verify API credentials and permissions before operations  
+**Rich Terminal Output** - Beautiful progress bars, tables, and status indicators  
+**Comprehensive Logging** - Detailed audit trail of all operations  
+**Flexible Configuration** - .env file support with CLI overrides  
 
 ## Requirements
 
-* Python 3.6+
-* Falcon API client
-* Falcon API secret
-* Falcon API with proper scope
-* Falcon API base URL (optional, defaults to `https://api.crowdstrike.com`)
+* Python 3.8+
+* CrowdStrike API credentials with FDR read scope
+* pip or pipenv for installation
+
+## Installation
+
+### Install from source (recommended for development)
+
+```bash
+git clone https://github.com/cs-shadowbq/falcon-fdr-dictionary.git
+cd falcon-fdr-dictionary
+pip install -e .
+```
+
+This installs the package in editable mode with all dependencies.
+
+## Configuration
+
+### Environment Variables
+
+Create a `.env` file from the example:
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env` with your credentials:
+
+```dotenv
+# Required
+FALCON_CLIENT_ID=your_client_id_here
+FALCON_CLIENT_SECRET=your_client_secret_here
+FALCON_CLIENT_CLOUD=auto
+
+# Optional
+OUTPUT_DIR=./docs
+DEFAULT_OUTPUT_FILE=fdr-event-dictionary.json
+LOG_LEVEL=INFO
+LOG_FILE=falcon_fdr_dictionary.log
+TAG_FILES=/path/to/custom_tags.yaml
+```
+
+### Command-Line Overrides
+
+All environment variables can be overridden via CLI options:
+
+```bash
+falcon-fdr-events-dictionary generate \
+  --client-id YOUR_ID \
+  --client-secret YOUR_SECRET \
+  --cloud us1 \
+  -o custom-output.json
+```
 
 ## Usage
 
-### Installation
+### Command Structure
 
-Python package can be installed from PyPI: (When available TBD)
-
-```bash
-pip install falcon-fdr-event-dictionary
+```
+falcon-fdr-events-dictionary [OPTIONS] COMMAND [ARGS]...
 ```
 
-You can also install directly from source:
+### Available Commands
+
+#### 1. `generate` - Fetch FDR Event Dictionary
+
+Fetches all FDR event schemas from CrowdStrike API with progress tracking:
 
 ```bash
-python setup.py install
+# Using .env configuration
+falcon-fdr-events-dictionary generate
+
+# With CLI options
+falcon-fdr-events-dictionary generate \
+  --client-id YOUR_ID \
+  --client-secret YOUR_SECRET \
+  --cloud us1 \
+  -o output.json \
+  -v
 ```
 
-You can also just run the script directly:
+**Options:**
 
-```bash
-python ./falcon-fdr-event-dictionary.py -k $FALCON_CLIENT_ID -s $FALCON_CLIENT_SECRET
+* `--client-id TEXT` - CrowdStrike API client ID (env: FALCON_CLIENT_ID)
+* `--client-secret TEXT` - CrowdStrike API client secret (env: FALCON_CLIENT_SECRET)
+* `--cloud [auto|us1|us2|eu1|usgov1|usgov2]` - Cloud region (env: FALCON_CLIENT_CLOUD)
+* `-o, --output PATH` - Output file path
+* `-v, --verbose` - Enable verbose output
+
+**Example Output:**
+
 ```
-
-## Falcon FDR Event Dictionary
-
-This tool will pull the Falcon FDR event dictionary and save it to a file in the current directory.
-When running directly from the script, the file will be named `falcon-fdr-event-dictionary.json` by default.
-
-```shell
-usage: falcon-fdr-event-dictionary.py [options]
-
-FDR Event Dictionary.
- ___   ___   ____          ___   _   _  ___   _  _   _____         ___    ___   ___  _____   ___   ____   _  _     _    ____   _  _
-) __( \   \ /  _ \  ____  ) __( \ ( ) /) __( ) \/ ( )__ __( ____  \   \  )_ _( / _( )__ __( )_ _( / __ \ ) \/ (   )_\  /  _ \ ) () (
-| _)  | ) ( )  ' / )____( | _)   )\_/( | _)  |  \ |   | |  )____( | ) (  _| |_ ))_    | |   _| |_ ))__(( |  \ |  /( )\ )  ' / '.  /
+ ___   ___   ____          ___   _   _  ___   _  _   _____         ___    ___   ___  _____   ___   ____   _  _     _    ____   _  _  
+) __( \   \ /  _ \  ____  ) __( \ ( ) /) __( ) \/ ( )__ __( ____  \   \  )_ _( / _( )__ __( )_ _( / __ \ ) \/ (   )_\  /  _ \ ) () ( 
+| _)  | ) ( )  ' / )____( | _)   )\_/( | _)  |  \ |   | |  )____( | ) (  _| |_ ))_    | |   _| |_ ))__(( |  \ |  /( )\ )  ' / '.  /  
 )_(   /___/ |_()_\        )___(   \_/  )___( )_()_(   )_(         /___/ )_____(\__(   )_(  )_____(\____/ )_()_( )_/ \_(|_()_\  /_(
 
-optional arguments:
-  -h, --help            show this help message and exit
-  -b BASE_URL, --base_url BASE_URL
-                        CrowdStrike base URL for Gov Clouds
-  -V, --verbose         verbose mode
+Falcon FDR Event Dictionary v1.0.0
 
-Options:
-  -v, --version         show program's version number and exit
+╭───────────────╮
+│ Generate Mode │
+╰───────────────╯
+Output file: docs/fdr-event-dictionary.json
+Cloud region: auto
 
-required arguments:
-  -k FALCON_CLIENT_ID, --falcon_client_id FALCON_CLIENT_ID
-                        CrowdStrike Falcon API Client ID
-  -s FALCON_CLIENT_SECRET, --falcon_client_secret FALCON_CLIENT_SECRET
-                        CrowdStrike Falcon API Client Secret
+✓ Authentication successful
 
-Output options:
-  -o OUTPUT, --output OUTPUT
-                        Output file name
+Fetching 2,847 events...
 
-Example(s):
-./falcon-fdr-event-dictionary.py  -k $FALCON_CLIENT_ID -s $FALCON_CLIENT_SECRET
-./falcon-fdr-event-dictionary.py  -k $FALCON_CLIENT_ID -s $FALCON_CLIENT_SECRET -b $FALCON_BASE_URL
+⠋ Fetching event details... ████████████████████░░░░░░░░  75% (2135/2847) 0:01:23
+
+✓ Successfully generated dictionary
+Saved 2847 events to: docs/fdr-event-dictionary.json
 ```
 
-### Example
+#### 2. `tag` - Add Tags and Expanded Names
 
-Note the FDR Event Dictionary download request is paginated, and the script will automatically download all pages. This may take a few minutes.
+Adds human-readable event names and keyword-based tags to the dictionary:
 
-```python
- python ./falcon-fdr-event-dictionary.py -k $FALCON_CLIENT_ID -s $FALCON_CLIENT_SECRET
-Length of current set: 200
-0 of 1709
-........................................................................................................................................................................................................-
-Length of current set: 200
-200 of 1709
-........................................................................................................................................................................................................-
-Length of current set: 200
-400 of 1709
-........................................................................................................................................................................................................-
-Length of current set: 200
-600 of 1709
-........................................................................................................................................................................................................-
-Length of current set: 200
-800 of 1709
-........................................................................................................................................................................................................-
-Length of current set: 200
-1000 of 1709
-........................................................................................................................................................................................................-
-Length of current set: 200
-1200 of 1709
-........................................................................................................................................................................................................-
-Length of current set: 200
-1400 of 1709
-........................................................................................................................................................................................................-
-Length of current set: 109
-1600 of 1709
-.............................................................................................................-
+```bash
+# Using default tags
+falcon-fdr-events-dictionary tag input.json output.json
+
+# Using custom tag files
+falcon-fdr-events-dictionary tag input.json output.json \
+  -t custom_tags.yaml \
+  -t additional_tags.yaml \
+  -v
 ```
 
-### Example of the dictionary entry
+**Options:**
 
-```json
-    {
-        "base_id": "184",
-        "description": "Sent by LFODownloadActor when a new configuration manifest has been downloaded.",
-        "fields": [
-            {
-                "id": "15",
-                "name": "TargetFileName",
-                "optional": false,
-                "version-added": 0
-            },
-            {
-                "id": "4",
-                "name": "Status",
-                "optional": false,
-                "version-added": 0
-            },
-            {
-                "id": "63",
-                "name": "ErrorText",
-                "optional": false,
-                "version-added": 0
-            },
-            {
-                "id": "66",
-                "name": "CloudErrorCode",
-                "optional": false,
-                "version-added": 0
-            },
-            {
-                "id": "46",
-                "name": "SHA256HashData",
-                "optional": false,
-                "version-added": 0
-            },
-            {
-                "id": "47",
-                "name": "Id",
-                "optional": false,
-                "version-added": 1
-            }
-        ],
-        "id": "268435640",
-        "name": "ManifestDownloadComplete",
-        "platform": "mac",
-        "version": 1
-    },
+* `-t, --tag-files PATH` - Custom tag files (can be specified multiple times)
+* `-v, --verbose` - Enable verbose output
+
+**Example Output:**
+
+```
+Tag files: Using default tags
+
+✓ Loaded 2847 events
+
+✓ Successfully tagged dictionary
+Saved 2847 events to: output.json
+
+✓ All events successfully tagged
 ```
 
-## Expanding the Name and Tagging the DataSets created by Falcon FDR Schemas Dictionary
+#### 3. `validate` - Validate API Credentials
 
-### Why expand the name?
+Verifies API credentials and FDR access permissions:
 
-CrowdStrike name of events in the dictionary use no spaces. Using these scripts, you can expand the name field of the dictionary into `name_expanded`. The `name_expanded` field injects spaces so the field becomes human readable.
+```bash
+# Using .env configuration
+falcon-fdr-events-dictionary validate
 
-### Why add additional tags?
-
-CrowdStrike only provides the platform for each event in the dictionary. Using these scripts, you can add `tags` to the DataSets created by Falcon FDR Schemas Dictionary. Tags are important for third-party tools that use the DataSets in production. They can be used to filter the DataSets by platform, type, or other criteria. The `tags` are based on keywords found in the `description` and `name_expanded` fields of the dictionary.
-
-### Running the script
-
-You can tag the DataSets created by Falcon FDR Schemas Dictionary with the following command `python ./bin/tag-dictionary.py <input_file> <output_file>`
-
-This script takes a JSON file as input and outputs a JSON file with the `tags` and `name_expanded` fields added to each collection. The function uses a dictionary of keywords and their corresponding tags to find likely tags. The script also prints to STDOUT the collections for which no tag was found.
-
-An snippet example of the tag cloud keyword dictionary:
-
-```python
-keywords = {
-        'file': ['file', 'files', 'disk', 'rename', 'volume', 'io', 'directory', 'image', 'symbolic link'],
-        'pe': ['pe', 'pe32', 'pe64', 'portable executable', 'executable'],
-        (...)
-}
+# With specific credentials
+falcon-fdr-events-dictionary validate \
+  --client-id YOUR_ID \
+  --client-secret YOUR_SECRET \
+  --cloud us1
 ```
 
-### Example of the modified dictionary entry
+**Example Output:**
+
+```
+╭───────────────╮
+│ Validate Mode │
+╰───────────────╯
+Cloud Region: us-1
+
+✓ Validation successful - API access confirmed
+Your credentials and permissions are correctly configured.
+Base URL: https://api.us-1.crowdstrike.com
+```
+
+## Tag Files
+
+### Default Tags
+
+The tool includes 60+ built-in tags in `falcon_fdr_dictionary/tags/default_tags.yaml`:
+
+```yaml
+file: [file, files, disk, rename, volume, io, directory, image, symbolic link]
+process: [process, processes, executable, execution, spawn]
+network: [network, socket, connection, tcp, udp, port, dns, http]
+memory: [memory, heap, allocation, page, virtual]
+registry: [registry, reg key, hive, regkey]
+authentication: [auth, login, logon, credential, password, token]
+malware: [malware, virus, trojan, ransomware, backdoor]
+# ... and 50+ more categories
+```
+
+### Custom Tag Files
+
+Create custom YAML files for organization-specific tagging:
+
+```yaml
+# my_custom_tags.yaml
+custom_category: [keyword1, keyword2, keyword3]
+incident_response: [forensics, investigation, triage]
+compliance: [pci, hipaa, gdpr, sox]
+```
+
+Load multiple tag files (they merge with default tags):
+
+```bash
+falcon-fdr-events-dictionary tag input.json output.json \
+  -t my_custom_tags.yaml \
+  -t team_tags.yaml
+```
+
+Or configure in `.env`:
+
+```dotenv
+TAG_FILES=/path/to/custom_tags.yaml,/path/to/team_tags.yaml
+```
+
+## Output Format
+
+### Generated Dictionary Entry
 
 ```json
 {
-    "description": "Sys Config Info",
-    "id": 805308726,
-    "name": "SysConfigInfo",
-    "name_expanded": "Sys Config Info",
-    "platform": "linux",
-    "tags": [
-        "unix",
-        "info",
-        "audit"
+    "id": "268435640",
+    "name": "ManifestDownloadComplete",
+    "description": "Sent by LFODownloadActor when a new configuration manifest has been downloaded.",
+    "platform": "mac",
+    "base_id": "184",
+    "version": 1,
+    "fields": [
+        {
+            "id": "15",
+            "name": "TargetFileName",
+            "optional": false,
+            "version-added": 0
+        },
+        {
+            "id": "4",
+            "name": "Status",
+            "optional": false,
+            "version-added": 0
+        }
     ]
-    // ( .version,.base_id,.fields )
 }
 ```
 
-```shell
-python ./bin/tag-dictionary.py docs/fdr-event-dictionary.json docs/fdr-event-dictionary-tagged.json
-No tags found for: (999999) New Unknown Keyword Found
+### Tagged Dictionary Entry
+
+After running the `tag` command, entries include:
+
+```json
+{
+    "id": "268435640",
+    "name": "ManifestDownloadComplete",
+    "name_expanded": "Manifest Download Complete",
+    "description": "Sent by LFODownloadActor when a new configuration manifest has been downloaded.",
+    "platform": "mac",
+    "tags": [
+        "configuration",
+        "download",
+        "file"
+    ],
+    "base_id": "184",
+    "version": 1,
+    "fields": [...]
+}
 ```
 
-## Filtering or Converting the JSON Dictionary
+## Advanced Usage
 
-You may want to simplify the dictionary to only include the `name`, `id`, `description`, and `platform` fields. This can be done with the following command:
+### Filtering with jq
 
-Using `jq`:
+Extract only essential fields:
 
-```shell
-cat fdr-event-dictionary.json | jq 'map(del(.version,.base_id,.fields))' > fdr-event-dictionary-filtered.json
+```bash
+cat fdr-event-dictionary.json | \
+  jq 'map(del(.version,.base_id,.fields))' > filtered.json
 ```
 
-You can also use `jtbl` to convert the JSON to CSV:
+### Converting to CSV
 
-Using `jtbl`:
-
-```shell
-cat docs/fdr-event-dictionary-tagged.json |jtbl -c > dictionary.csv
+```bash
+cat docs/fdr-event-dictionary-tagged.json | \
+  jq -r '["id","name","name_expanded","platform","tags"],
+         (.[] | [.id, .name, .name_expanded, .platform, (.tags | join(";"))])
+         | @csv' > dictionary.csv
 ```
 
-You can also use `jq` and `jtbl` to better view the data in the terminal:
+### Viewing in Terminal
 
-```shell
-cat fdr-event-dictionary.json | jq 'map(del(.version,.base_id,.fields,.description))' | jtbl
+Use Rich tables (built into the tool) or pipe to external tools:
 
-╤════════════╤══════════════════════════════╤══════════════════════════════╤══════════════╤══════════════════════════════╕
-│         id │ name                         │ name_expanded                │ platform     │ tags                         │
-╞════════════╪══════════════════════════════╪══════════════════════════════╪══════════════╪══════════════════════════════╡
-│  805308726 │ SysConfigInfo                │ Sys Config Info              │ linux        │ ['unix', 'info', 'audit']    │
-├────────────┼──────────────────────────────┼──────────────────────────────┼──────────────┼──────────────────────────────┤
-│  805308759 │ EmailFileWritten             │ Email File Written           │ linux        │ ['file', 'mail']             │
-├────────────┼──────────────────────────────┼──────────────────────────────┼──────────────┼──────────────────────────────┤
-│  805308800 │ TestStringFormatHexlify      │ Test String Format Hexlify   │ linux        │ ['test']                     │
-├────────────┼──────────────────────────────┼──────────────────────────────┼──────────────┼──────────────────────────────┤
-...
+```bash
+cat fdr-event-dictionary-tagged.json | \
+  jq 'map(del(.version,.base_id,.fields))' | \
+  python -m json.tool
 ```
+
+## Logging
+
+All operations are logged to `falcon_fdr_dictionary.log` (configurable):
+
+```
+================================================================================
+Starting FDR Event Dictionary Generation
+Cloud region: us-1
+Log level: INFO
+Output file: docs/fdr-event-dictionary.json
+Authenticating with CrowdStrike API...
+Authentication successful
+Fetching initial page to determine total event count...
+Total events to fetch: 2847
+Sorting 2847 events by ID...
+Writing 2847 events to docs/fdr-event-dictionary.json...
+Successfully generated dictionary with 2847 events
+Output saved to: docs/fdr-event-dictionary.json
+================================================================================
+```
+
+## Development
+
+See [DEV.md](DEV.md) for development setup, architecture details, and contributing guidelines.
+
+## Troubleshooting
+
+### Authentication Failures
+
+```bash
+# Validate your credentials first
+falcon-fdr-events-dictionary validate
+
+# Check your .env file
+cat .env
+
+# Ensure API scope includes FDR read permissions
+```
+
+### Tag Files Not Loading
+
+```bash
+# Check tag file path and permissions
+ls -la /path/to/custom_tags.yaml
+
+# Validate YAML syntax
+python -c "import yaml; yaml.safe_load(open('custom_tags.yaml'))"
+
+# Run with verbose mode to see tag loading messages
+falcon-fdr-events-dictionary tag input.json output.json -t custom_tags.yaml -v
+```
+
+## Cloud Regions
+
+Supported CrowdStrike cloud regions:
+
+* `auto` - Automatic detection (default)
+* `us1` - US Commercial 1
+* `us2` - US Commercial 2
+* `eu1` - European Union
+* `usgov1` - US Government 1
+* `usgov2` - US Government 2
 
 ## License
 
-MIT License
+See [LICENSE](LICENSE) file for details.
+
+## Credits
+
+Developed and maintained by the CrowdStrike community.
+
+## Related Projects
+
+* [falcon-policy-scoring](https://github.com/cs-shadowbq/falcon-policy-scoring) - Policy audit and scoring tool
+* [cao-report-fetcher](https://github.com/cs-shadowbq/cao-report-fetcher) - CrowdStrike report automation
+
+## Support
+
+For issues, questions, or contributions:
+
+* Open an issue on GitHub
+* See [DEV.md](DEV.md) for development guidelines
+* Consult CrowdStrike API documentation for FDR schema details

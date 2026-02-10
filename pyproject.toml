@@ -1,0 +1,68 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "falcon-fdr-dictionary"
+version = "1.0.0"
+description = "CrowdStrike Falcon FDR Event Dictionary - Schema retrieval and tagging tool"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.8"
+authors = [{ name = "CrowdStrike" }]
+maintainers = [
+    { name = "Scott MacGregor", email = "scott.macgregor@crowdstrike.com" },
+]
+dependencies = [
+    "crowdstrike-falconpy>=1.5.4",
+    "click>=8.1.0",
+    "rich>=13.0.0",
+    "tabulate>=0.9.0",
+    "python-dotenv>=1.0.0",
+    "pyyaml>=6.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "flake8>=6.0.0",
+    "pylint>=3.0.0",
+    "black>=23.0.0",
+]
+
+[project.scripts]
+falcon-fdr-events-dictionary = "falcon_fdr_dictionary.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/cs-shadowbq/falcon-fdr-dictionary"
+Repository = "https://github.com/cs-shadowbq/falcon-fdr-dictionary"
+Issues = "https://github.com/cs-shadowbq/falcon-fdr-dictionary/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["falcon_fdr_dictionary*"]
+exclude = ["tests*", "docs*", "bin*"]
+
+[tool.setuptools.package-data]
+falcon_fdr_dictionary = ["tags/*.yaml"]
+
+[tool.black]
+line-length = 100
+target-version = ['py38', 'py39', 'py310', 'py311']
+include = '\.pyi?$'
+
+[tool.pylint.messages_control]
+max-line-length = 100
+disable = [
+    "C0103", # Invalid name
+    "C0114", # Missing module docstring
+    "R0913", # Too many arguments
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --cov=falcon_fdr_dictionary --cov-report=term-missing"

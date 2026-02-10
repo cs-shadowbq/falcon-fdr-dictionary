@@ -1,0 +1,521 @@
+# FDR Event Dictionary - Default Tag Keywords
+# This file defines keyword-to-tag mappings for automatic event classification
+# Format: tag_name: [list, of, keywords, to, match]
+#
+# You can create additional tag files and load them using the TAG_FILES config option
+# Keywords are matched case-insensitively using word boundaries
+# Use quotes for multi-word keywords
+
+file:
+  - file
+  - files
+  - disk
+  - rename
+  - volume
+  - io
+  - directory
+  - image
+  - symbolic link
+
+pe:
+  - pe
+  - pe32
+  - pe64
+  - portable executable
+  - executable
+
+process:
+  - proc
+  - pr2
+  - process
+  - start
+  - thread
+  - command
+  - execute
+  - fork
+  - execution
+  - executed
+  - executing
+  - named pipe
+  - suppressingpr2s
+
+memory:
+  - memory
+  - allocate
+  - free
+  - byte
+  - amcache
+  - cache
+  - page
+  - pool
+  - heap
+  - stack
+  - virtual
+  - physical
+  - ram
+  - swap
+  - address
+  - address space
+  - addressspace
+  - address-space
+  - address_space
+  - vad
+  - vads
+  - vadtree
+  - vad_tree
+  - vad tree
+  - mprotect
+  - seh
+  - sehchain
+
+network:
+  - network
+  - connection
+  - request
+  - bind
+  - ip4
+  - ip6
+  - arp
+  - promiscuous
+  - remote
+  - socket
+  - channel
+  - bindip4
+  - bindip6
+  - bindip
+  - addressip4
+  - addressip6
+  - addressip
+  - routeip4
+  - routeip6
+  - routeip
+  - listip4
+  - listip6
+  - packet
+
+dll:
+  - dll
+  - loaded
+  - dylib
+  - so
+  - module
+
+hook:
+  - hook
+  - hooked
+  - api
+  - call
+  - function
+  - handle
+
+kernel:
+  - kernel
+  - driver
+  - os
+  - system
+  - nt
+  - ntoskrnl
+  - ntdll
+  - ntos
+
+syscall:
+  - syscall
+  - system call
+
+time:
+  - time
+  - timestamp
+  - date
+  - datetime
+  - timezone
+  - utc
+  - gmt
+  - localtime
+  - local
+  - zone
+  - entropy
+
+registry:
+  - registry
+  - key
+  - asep
+  - reg
+
+machine:
+  - hostname
+  - host
+  - machine
+  - computer
+
+manipulation:
+  - manipulation
+  - zero
+  - sign
+  - bypass
+
+authentication:
+  - authentication
+  - login
+  - logout
+  - logon
+  - logoff
+  - active directory
+  - skeleton
+
+user:
+  - user
+  - account
+  - credential
+  - credentials
+  - kerberos
+  - ntlm
+  - password
+
+group:
+  - group
+  - membership
+
+audit:
+  - audit
+  - logging
+  - tamper
+  - ledger
+  - etw
+  - amsi
+  - log
+  - error
+  - warning
+  - critical
+  - info
+  - debug
+  - trace
+  - crash
+
+privilege:
+  - privilege
+  - escalation
+  - elevation
+  - impersonate
+  - impersonation
+  - token
+  - access
+  - rights
+  - permission
+  - permissions
+  - privileges
+
+malware:
+  - malware
+  - trojan
+  - virus
+  - malicious
+  - mal
+  - threat
+
+classification:
+  - classification
+  - classified
+  - category
+  - categories
+  - type
+  - types
+  - maliciousness
+  - Bad Reputation
+
+exploit:
+  - exploit
+  - vulnerability
+  - brute
+
+intrusion:
+  - intrusion
+  - intruder
+  - detection
+  - detect
+
+anomaly:
+  - anomaly
+  - abnormal
+  - anomalous
+  - excessive
+  - behavior
+  - behaviour
+  - abnormality
+  - abnormalities
+  - abnormally
+
+monitoring:
+  - monitoring
+  - surveillance
+
+incident:
+  - incident
+  - breach
+
+data:
+  - data
+  - exfiltration
+  - leak
+
+font:
+  - font
+
+clipboard:
+  - clipboard
+  - clip
+
+application:
+  - application
+  - installed application
+  - installed applications
+  - installed app
+  - installed apps
+  - app
+  - apps
+  - installed
+  - install
+  - uninstall
+  - uninstalled
+  - uninstalling
+  - installing
+  - installer
+  - uninstaller
+  - installers
+
+dns:
+  - dns
+  - domain
+
+smb:
+  - smb
+  - share
+  - samba
+
+simpleservice:
+  - ftp
+  - ping
+  - http
+  - https
+  - telnet
+  - ssh
+  - sftp
+  - dhcp
+  - tftp
+  - ntp
+  - snmp
+  - ldap
+  - kerberos
+  - rpc
+  - rpcbind
+  - service
+  - daemon
+  - services
+
+mail:
+  - mail
+  - email
+  - imap
+  - pop
+  - smtp
+
+windows:
+  - wmi
+  - active
+  - powershell
+  - cmd
+  - ad
+  - gpo
+
+mac:
+  - mac
+  - osx
+  - os x
+  - macos
+  - mac os
+  - macosx
+  - mac os x
+  - macos x
+  - macmru
+
+unix:
+  - unix
+  - sudo
+  - suid
+  - linux
+  - posix
+  - uname
+  - sysctl
+  - sys
+
+manifest:
+  - manifest
+  - resource
+
+certificate:
+  - certificate
+  - cert
+  - certificates
+  - certs
+  - tls
+  - ssl
+  - code signing
+  - signing
+
+crypto:
+  - crypto
+  - encrypt
+  - decrypt
+  - hash
+
+schedule:
+  - schedule
+  - task
+  - job
+  - cron
+  - at
+  - scheduler
+  - batch
+
+firmware:
+  - firmware
+  - bios
+  - uefi
+  - boot
+  - mft
+  - mbr
+  - gpt
+  - efi
+  - bootkit
+
+firewall:
+  - firewall
+  - rule
+
+usb:
+  - usb
+  - device
+
+browser:
+  - browser
+  - chrome
+  - firefox
+  - edge
+  - ie
+  - safari
+
+office:
+  - excel
+  - outlook
+  - word
+  - powerpoint
+  - office365
+  - office
+
+script:
+  - script
+  - macro
+  - shell
+  - powershell
+  - bash
+  - pty
+  - runtime environment
+  - environment variables
+
+endpoint:
+  - endpoint
+  - device
+
+container:
+  - container
+  - docker
+  - kubernetes
+  - pod
+  - k8s
+  - cluster
+  - workload
+  - workloads
+  - containerd
+  - namespace
+  - instance
+  - uncontainerize
+
+cloud:
+  - cloud
+  - aws
+  - azure
+  - gcp
+  - awsiam
+  - awss3
+  - awscloudtrail
+  - awscloudwatch
+  - awscloudfront
+  - awscloudformation
+  - awscloudwatchlogs
+  - awscloudwatchevents
+
+"null":
+  - "null"
+  - undefined
+
+info:
+  - info
+  - telemetry
+  - entry
+  - status
+  - compatibility
+
+snapshot:
+  - snapshot
+  - backup
+
+policy:
+  - policy
+  - compliance
+  - complete
+  - completed
+  - suppression
+  - config state update
+
+agent:
+  - agent
+  - falcon
+  - sensor
+  - falcon-sensor
+  - zta
+  - lightning
+  - rtr
+  - lfo
+  - collector
+  - ods
+  - forensics
+  - spotlight
+  - idp
+  - sps
+  - shim
+  - fcr
+  - provisioning
+  - injectionml
+
+test:
+  - test
+  - tests
+  - debug
+  - debuggable
+  - suppressing
+  - suppress
+  - invalidated
+
+cid:
+  - cid
+  - customer id
+
+mobile:
+  - apk
+  - eapks
+  - ios
+  - android
+  - mobile
+  - phone
+  - tablet
+  - play
+  - safety net

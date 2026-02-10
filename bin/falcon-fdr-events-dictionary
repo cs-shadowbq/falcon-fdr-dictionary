@@ -1,0 +1,12 @@
+#!/usr/bin/env python3
+"""Shim for falcon-fdr-events-dictionary CLI tool.
+
+This is a simple entry point that directly imports and calls the main()
+function from the falcon_fdr_dictionary.cli module. No business logic
+or code duplication - it's a pure shim.
+"""
+
+from falcon_fdr_dictionary.cli import main
+
+if __name__ == "__main__":
+    main()
