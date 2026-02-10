@@ -1,6 +1,6 @@
 # Falcon FDR Event Dictionary
 
-A comprehensive Python CLI tool for fetching, tagging, and managing CrowdStrike Falcon FDR (Flight Data Recorder) event schemas. Built with modern Python packaging, Rich terminal UI, and YAML-based configuration.
+A comprehensive Python CLI tool for fetching, tagging, and managing CrowdStrike Falcon FDR (Falcon Data Replicator) event schemas. Built with modern Python packaging, Rich terminal UI, and YAML-based configuration.
 
 ## Core Features
 
