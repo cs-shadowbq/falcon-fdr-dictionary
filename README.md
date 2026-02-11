@@ -1,5 +1,9 @@
 # Falcon FDR Event Dictionary
 
+[![Version](https://img.shields.io/badge/version-2.0-blue)](https://github.com/cs-shadowbq/falcon-fdr-dictionary/releases/tag/v2.0.0)
+![Python](https://img.shields.io/badge/python-3.8+-blue)
+[![Tests](https://github.com/cs-shadowbq/falcon-fdr-dictionary/actions/workflows/test.yml/badge.svg)](https://github.com/cs-shadowbq/falcon-fdr-dictionary/actions/workflows/test.yml)
+
 A comprehensive Python CLI tool for fetching, tagging, and managing CrowdStrike Falcon FDR (Falcon Data Replicator) event schemas. Built with modern Python packaging, Rich terminal UI, and YAML-based configuration.
 
 ## Core Features
